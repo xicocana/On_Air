@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,22 +34,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
+
         ConstraintLayout mlo = (ConstraintLayout) findViewById(R.id.banana);
 
         Switch butanu = (Switch) findViewById(R.id.switch2);
         Boolean switchState = butanu.isChecked();
 
+        if(pref.getBoolean("value", false)){
+            butanu.setChecked(true);
+            mlo.setBackgroundResource(R.drawable.on);
+        }
+
         butanu.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "ON", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "ON", Toast.LENGTH_LONG).show();
                     mlo.setBackgroundResource(R.drawable.on);
                     new blahblah().execute("on");
 
+                    editor.putBoolean("value", true);
+                    editor.commit();
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "OFF", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "OFF", Toast.LENGTH_LONG).show();
                     mlo.setBackgroundResource(R.drawable.off);
                     new blahblah().execute("off");
+
+                    editor.putBoolean("value", false);
+                    editor.commit();
                 }
             } });
     }
