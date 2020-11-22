@@ -2,4 +2,4 @@
 
 Simple app to control LED on Arduino NodeMcu via HTTP GET request.
 
-![](https://github.com/xicocana/On_Air/blob/main/on.jpg?raw=true | width=100)
+![](https://github.com/xicocana/On_Air/blob/main/on.jpg?raw=true){:height="50%" width="50%"}
